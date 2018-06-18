@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/js/jquery-3.3.1.min.js"></script>
+<meta charset="UTF-8">
+<title>欢迎</title>
+</head>
+<body>
+	用户名：<input type="text" id="userId" ><br/>
+	密码：<input type="password" id="userPassword"><br/>
+	昵称：<input type="text" id="userName"><br/>
+	手机号码：<input type="text" id="mobile"><br/>
+	<input type="button" name="submitBtn" value="提交" onclick="login();"/>
+	<input type="button" name="registerBtn" value="注册" onclick="register();"/>
+</body>
+
+<script type="text/javascript">
+	function login(){
+		$.ajax({
+			   type: "GET",
+			   url: "/login",
+			   data: {"userId":$("#userId").val()},
+			   success: function(data){
+				   if(data && data.successFlag == "Y"){
+						window.location.href = "/pages/login/login_success.html?userId="+data.userId;
+				   }
+			   }
+			});
+	}
+	
+	function register(){
+		$.ajax({
+			   type: "POST",
+			   url: "/register",
+			   data: {
+				   "userId":$("#userId").val(),
+				   "userName":$("#userName").val(),
+				   "passWord":$("#userPassword").val(),
+				   "mobile":$("#mobile").val()
+			   },
+			   success: function(data){
+				   if(data && data.successFlag == "Y"){
+						window.location.href = "/pages/login/login_success.html?userId="+data.userId;
+				   }
+			   }
+			});
+	}
+</script>
+</html>
