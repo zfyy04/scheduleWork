@@ -526,6 +526,8 @@ public class MySchedule {
 				List<String> tempList = new ArrayList<String>();
 				tempList.add(workerName);
 				reScheduleWorkerThisDay(finalSchedule, tempList, Integer.valueOf(day));
+				//把今天的放假班次加入此人
+				setWorkerToScheduleListByDay(finalSchedule, String.valueOf(i), DAY_REST, workerName);
 			}
 		}
 	}
