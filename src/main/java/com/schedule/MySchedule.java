@@ -72,8 +72,10 @@ public class MySchedule {
 		}
 		//打印结果
 		printAllSchedule(finalSchedule);
+		long timestamp = System.currentTimeMillis();
+		String fileName = "D:/排班_"+timestamp+".xlsx";
 		//导出结果
-		exportResult(finalSchedule, "D:/test.xlsx");
+		exportResult(finalSchedule, fileName);
 	}
 	
 	
@@ -969,6 +971,7 @@ public class MySchedule {
 		OutputStream out = null;
 		List<String> scheduleList = getAllScheduleList();
 		try {
+			createExcel(finalXlsxPath);
 			// 获取总列数
 			int columnNumCount = scheduleList.size()+1;
 			// 读取Excel文档
@@ -1084,5 +1087,44 @@ public class MySchedule {
 		Workbook wb = new XSSFWorkbook(in);
 		return wb;
 	}
+	
+	public static boolean fileExist(String fileDir){  
+        boolean flag = false;  
+        File file = new File(fileDir);  
+        flag = file.exists();  
+        return flag;  
+   }
+	
+	public static void createExcel(String fileDir) throws Exception{
+		File f = new File(fileDir);
+		if(f.exists()){
+			f.delete();
+		}
+        //创建workbook  
+		Workbook wb = new XSSFWorkbook();
+        //添加Worksheet（不添加sheet时生成的xls文件打开时会报错)  
+		wb.createSheet("sheet1");
+		wb.createSheet("sheet2");
+		wb.createSheet("sheet3");
+        //新建文件  
+        FileOutputStream out = null;  
+        try {  
+            //添加表头  
+            wb.getSheetAt(0).createRow(0);    //创建第一行    
+            wb.getSheetAt(1).createRow(0);    //创建第一行    
+            wb.getSheetAt(2).createRow(0);    //创建第一行    
+            out = new FileOutputStream(fileDir);  
+            wb.write(out);  
+        } catch (Exception e) {  
+        	System.out.println(e.getMessage());
+            throw e;
+        } finally {    
+            try {    
+                out.close();    
+            } catch (IOException e) {    
+                e.printStackTrace();  
+            }    
+        }    
+    }
 	
 }
