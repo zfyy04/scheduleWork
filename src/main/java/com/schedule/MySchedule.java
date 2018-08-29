@@ -73,9 +73,10 @@ public class MySchedule {
 		//打印结果
 		printAllSchedule(finalSchedule);
 		long timestamp = System.currentTimeMillis();
-		String fileName = "D:/排班_"+timestamp+".xlsx";
+		String fileName = "D:/排班/排班_"+timestamp+".xlsx";
+		String folderName = "D:/排班";
 		//导出结果
-		exportResult(finalSchedule, fileName);
+		exportResult(finalSchedule, fileName, folderName);
 	}
 	
 	
@@ -967,11 +968,11 @@ public class MySchedule {
 		}
 	}
 	
-	public static void exportResult(Map<String, Object> finalSchedule,String finalXlsxPath) {
+	public static void exportResult(Map<String, Object> finalSchedule,String finalXlsxPath,String folder) {
 		OutputStream out = null;
 		List<String> scheduleList = getAllScheduleList();
 		try {
-			createExcel(finalXlsxPath);
+			createExcel(finalXlsxPath,folder);
 			// 获取总列数
 			int columnNumCount = scheduleList.size()+1;
 			// 读取Excel文档
@@ -1095,7 +1096,11 @@ public class MySchedule {
         return flag;  
    }
 	
-	public static void createExcel(String fileDir) throws Exception{
+	public static void createExcel(String fileDir,String folder) throws Exception{
+		File dir = new File(folder);
+		if(!dir.exists()){
+			dir.mkdirs();
+		}
 		File f = new File(fileDir);
 		if(f.exists()){
 			f.delete();
