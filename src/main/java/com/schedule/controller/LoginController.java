@@ -21,11 +21,18 @@ public class LoginController {
 	@Autowired
 	public LoginService loginService;
 	
+	/**
+	 * 方式1返回页面，通过string指定返回文件路径
+	 * @return
+	 */
 	@RequestMapping(value="/")
 	public String login(){
 		return "login/login";
 	}
 	
+	/**
+	 * 方式2返回页面，通过ModelAndView进行页面操作返回
+	 */
 	@RequestMapping(value="/index")
 	public ModelAndView loginJsp(){
 		ModelAndView mv = new ModelAndView("login/login");
